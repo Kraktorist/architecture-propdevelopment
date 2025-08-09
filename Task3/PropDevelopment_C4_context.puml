@@ -1,0 +1,38 @@
+@startuml PropDevelopment Integration
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Context.puml
+
+Person(customer, "Собственник", "Собственник квартиры")
+System(mobileApp, "Мобильное приложение", "SuperApp - Витрина сервисов для собственника")
+System(userDb, "База данных собственников", "Данные о собственниках и принадлежащих им автомобилях и квартирах")
+System(APIGateway, "API Gateway", "Шлюз для подключения сервисов подрядчика")
+System_Ext(intercom, "Домофон", "Домофон с распознаванием лица")
+System_Ext(gate, "Шлагбаум", "Шлагбаум с распознаванием номеров")
+System_Ext(biometricDb, "База данных биометрии", "Биометрия пользователей")
+System(userDb, "База данных пользователей", "Данные пользователей и принадлежащих им объектов")
+System_Ext(autoDb, "База данных номеров автомобилей", "База данных доступа по номерам автомобилей")
+
+
+BiRel(customer, mobileApp, "Uses")
+note on link
+  - Пользователь открывает двери или шлагбаум
+  - Пользователь получает уведомление о госте
+end note
+BiRel(mobileApp, APIGateway, "REST/WS")
+BiRel(APIGateway, intercom, "REST/WS")
+note on link
+  - сервис посылает уведомление о госте
+  - сервис получает команду открытия дверей
+  - трансляция видео с камеры
+end note
+BiRel(APIGateway, gate, "REST/WS")
+note on link
+  - сервис получает команду открытия ворот
+end note
+Rel_L(APIGateway, userDb, "requests")
+note on link
+  - Поиск владельца по номеру автомобиля или биометрии
+end note
+
+BiRel(intercom, biometricDb, "REST")
+BiRel(gate, autoDb, "REST")
+@enduml
