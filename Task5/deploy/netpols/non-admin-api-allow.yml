@@ -1,0 +1,28 @@
+---
+kind: NetworkPolicy
+apiVersion: networking.k8s.io/v1
+metadata:
+  name: back-end-api-allow
+spec:
+  podSelector:
+    matchLabels:
+      role: back-end-api
+  ingress:
+  - from:
+      - podSelector:
+          matchLabels:
+            role: front-end
+---
+kind: NetworkPolicy
+apiVersion: networking.k8s.io/v1
+metadata:
+  name: front-end-allow
+spec:
+  podSelector:
+    matchLabels:
+      role: front-end
+  ingress:
+  - from:
+      - podSelector:
+          matchLabels:
+            role: back-end-api

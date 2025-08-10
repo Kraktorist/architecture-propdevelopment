@@ -1,0 +1,27 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    role: front-end
+  name: front-end-app
+spec:
+  ports:
+  - port: 80
+    protocol: TCP
+    targetPort: 80
+  selector:
+    role: front-end
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+    role: front-end
+  name: front-end-app
+spec:
+  containers:
+  - image: nginx
+    name: front-end-app
+    ports:
+    - containerPort: 80

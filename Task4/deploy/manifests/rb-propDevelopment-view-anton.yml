@@ -1,0 +1,13 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: anton-propDevelopment-view-binding
+  namespace: app01
+subjects:
+- kind: User
+  name: anton
+  apiGroup: rbac.authorization.k8s.io
+roleRef:
+  kind: ClusterRole
+  name: propDevelopment-view
+  apiGroup: rbac.authorization.k8s.io
