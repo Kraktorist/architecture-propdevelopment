@@ -1,0 +1,27 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    role: back-end-api
+  name: back-end-api-app
+spec:
+  ports:
+  - port: 80
+    protocol: TCP
+    targetPort: 80
+  selector:
+    role: back-end-api
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+    role: back-end-api
+  name: back-end-api-app
+spec:
+  containers:
+  - image: nginx
+    name: back-end-api-app
+    ports:
+    - containerPort: 80

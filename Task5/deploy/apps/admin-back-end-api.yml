@@ -1,0 +1,28 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    role: admin-back-end-api
+  name: admin-back-end-api-app
+spec:
+  ports:
+  - port: 80
+    protocol: TCP
+    targetPort: 80
+  selector:
+    role: admin-back-end-api
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  creationTimestamp: null
+  labels:
+    role: admin-back-end-api
+  name: admin-back-end-api-app
+spec:
+  containers:
+  - image: nginx
+    name: admin-back-end-api-app
+    ports:
+    - containerPort: 80
